@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Pull Code') {
             steps {
-                git 'https://github.com/your-repo-url.git'
+                git 'https://github.com/paduchuridinesh/box-office-deploy.git'
             }
         }
         stage('Build Docker Image') {
