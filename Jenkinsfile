@@ -9,12 +9,12 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t boxoffice-app .'
+                bat 'docker build -t boxoffice-app .'
             }
         }
         stage('Run Docker Container') {
             steps {
-                sh 'docker-compose up -d'
+                bat 'docker-compose up -d'
             }
         }
     }
