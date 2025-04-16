@@ -2,6 +2,11 @@ pipeline {
     agent any
 
     stages {
+        stage('Disable SSL Verify') {
+            steps {
+                bat 'git config --global http.sslVerify false'
+            }
+        }
         stage('Pull Code') {
             steps {
                 git 'https://github.com/paduchuridinesh/box-office-deploy.git'
