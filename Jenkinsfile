@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        EMAIL = 'paduchuridinesh15218@gmail.com'
-    }
-
     stages {
         stage('Disable SSL Verify') {
             steps {
@@ -40,15 +36,26 @@ pipeline {
     }
     post {
         success {
-            mail to: "${EMAIL}",
-                 subject: "✅ Jenkins Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                 body: "The build was successful!\n\nProject: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}"
+            emailext(
+                subject: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """<p>Build Successful!</p>
+                     <p><b>Project:</b> ${env.JOB_NAME}</p>
+                     <p><b>Build Number:</b> ${env.BUILD_NUMBER}</p>
+                     <p><b>URL:</b> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>""",
+                to: 'paduchuridinesh15218@gmail.com',
+                mimeType: 'text/html'
+            )
         }
-
         failure {
-            mail to: "${EMAIL}",
-                 subject: "❌ Jenkins Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                 body: "The build failed.\n\nProject: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}"
+            emailext(
+                subject: "❌ FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """<p>Build Failed!</p>
+                     <p><b>Project:</b> ${env.JOB_NAME}</p>
+                     <p><b>Build Number:</b> ${env.BUILD_NUMBER}</p>
+                     <p><b>URL:</b> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>""",
+                to: 'paduchuridinesh15218@gmail.com',
+                mimeType: 'text/html'
+            )
         }
     }
 }
