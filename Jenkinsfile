@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        EMAIL = 'paduchuridinesh15218@gmail.com'
+    }
+
     stages {
         stage('Disable SSL Verify') {
             steps {
